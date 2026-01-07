@@ -1,0 +1,325 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.section {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Auth Section */
+#auth-section {
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+#auth-section h1 {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #e0e0e0;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tab-btn.active {
+    background: #4CAF50;
+    color: white;
+}
+
+.auth-form h2 {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.auth-form button:hover {
+    background: #45a049;
+}
+
+/* App Section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+header h1 {
+    color: #333;
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #da190b;
+}
+
+/* Create Form */
+.create-form {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.create-form h3 {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.create-form input {
+    width: calc(100% - 120px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.create-form button {
+    padding: 10px 20px;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.create-form button:hover {
+    background: #1976D2;
+}
+
+/* Projects List */
+#projects-container h3 {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.project-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.project-item:hover {
+    border-color: #2196F3;
+}
+
+.project-info {
+    flex: 1;
+}
+
+.project-name {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.project-status {
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.status-draft {
+    background: #FFC107;
+    color: #333;
+}
+
+.status-active {
+    background: #4CAF50;
+    color: white;
+}
+
+.project-actions button {
+    padding: 8px 12px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-tasks {
+    background: #2196F3;
+    color: white;
+}
+
+.btn-activate {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-tasks:hover {
+    background: #1976D2;
+}
+
+.btn-activate:hover {
+    background: #45a049;
+}
+
+/* Tasks Section */
+#tasks-section h3 {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+#selected-project-name {
+    color: #2196F3;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.task-item.completed {
+    background: #e8f5e9;
+    border-color: #a5d6a7;
+}
+
+.task-title {
+    flex: 1;
+    color: #333;
+}
+
+.task-item.completed .task-title {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.task-status {
+    font-size: 12px;
+    margin-right: 10px;
+    color: #888;
+}
+
+.btn-complete {
+    padding: 6px 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-complete:hover {
+    background: #45a049;
+}
+
+.btn-complete:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.back-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #757575;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #616161;
+}
+
+/* Messages */
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.message.error {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.message.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+}
+

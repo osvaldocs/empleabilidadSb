@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Proyectos y Tareas</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div id="auth-section" class="section">
+            <h1>Sistema de Gestión de Proyectos</h1>
+            
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="showTab('login')">Iniciar Sesión</button>
+                <button class="tab-btn" onclick="showTab('register')">Registrarse</button>
+            </div>
+
+            <div id="login-form" class="auth-form">
+                <h2>Iniciar Sesión</h2>
+                <input type="text" id="login-username" placeholder="Usuario">
+                <input type="password" id="login-password" placeholder="Contraseña">
+                <button onclick="login()">Entrar</button>
+            </div>
+
+            <div id="register-form" class="auth-form hidden">
+                <h2>Registrarse</h2>
+                <input type="text" id="register-username" placeholder="Usuario">
+                <input type="password" id="register-password" placeholder="Contraseña">
+                <button onclick="register()">Registrarse</button>
+            </div>
+
+            <div id="auth-message" class="message"></div>
+        </div>
+
+        <!-- Main App Section -->
+        <div id="app-section" class="section hidden">
+            <header>
+                <h1>Mis Proyectos</h1>
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </header>
+
+            <!-- Create Project -->
+            <div class="create-form">
+                <h3>Crear Nuevo Proyecto</h3>
+                <input type="text" id="project-name" placeholder="Nombre del proyecto">
+                <button onclick="createProject()">Crear Proyecto</button>
+            </div>
+
+            <!-- Projects List -->
+            <div id="projects-container">
+                <h3>Proyectos</h3>
+                <div id="projects-list"></div>
+            </div>
+
+            <!-- Tasks Section (shown when project selected) -->
+            <div id="tasks-section" class="hidden">
+                <h3>Tareas del Proyecto: <span id="selected-project-name"></span></h3>
+                
+                <div class="create-form">
+                    <input type="text" id="task-title" placeholder="Título de la tarea">
+                    <button onclick="createTask()">Crear Tarea</button>
+                </div>
+
+                <div id="tasks-list"></div>
+                
+                <button class="back-btn" onclick="hideTasks()">Volver a Proyectos</button>
+            </div>
+
+            <div id="app-message" class="message"></div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+

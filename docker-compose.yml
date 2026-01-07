@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: demo-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: demo_project
+      MYSQL_USER: demo_user
+      MYSQL_PASSWORD: demo_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - demo-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: demo-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/demo_project?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: demo_user
+      SPRING_DATASOURCE_PASSWORD: demo_pass
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - demo-network
+
+volumes:
+  mysql_data:
+
+networks:
+  demo-network:
+    driver: bridge
+
