@@ -5,8 +5,10 @@ import com.example.demo.infrastructure.audit.AuditAdapter;
 import com.example.demo.infrastructure.notification.NotificationAdapter;
 import com.example.demo.infrastructure.persistence.adapter.ProjectPersistenceAdapter;
 import com.example.demo.infrastructure.persistence.adapter.TaskPersistenceAdapter;
+import com.example.demo.infrastructure.persistence.adapter.UserPersistenceAdapter;
 import com.example.demo.infrastructure.persistence.repository.ProjectJpaRepository;
 import com.example.demo.infrastructure.persistence.repository.TaskJpaRepository;
+import com.example.demo.infrastructure.persistence.repository.UserJpaRepository;
 import com.example.demo.infrastructure.security.CurrentUserAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,11 @@ public class AdapterConfig {
     @Bean
     public TaskRepositoryPort taskRepositoryPort(TaskJpaRepository repo) {
         return new TaskPersistenceAdapter(repo);
+    }
+
+    @Bean
+    public UserRepositoryPort userRepositoryPort(UserJpaRepository repo) {
+        return new UserPersistenceAdapter(repo);
     }
 
     @Bean

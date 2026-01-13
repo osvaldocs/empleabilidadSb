@@ -270,3 +270,6 @@ Desarrollado como assessment técnico para demostrar:
 - Testing
 - Integración completa (backend + frontend + BD)
 
+
+
+

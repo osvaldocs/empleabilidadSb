@@ -45,15 +45,26 @@ async function login() {
 
         if (response.ok) {
             const data = await response.json();
-            token = data.token;
-            localStorage.setItem('token', token);
-            showApp();
-            loadProjects();
+            if (data.token) {
+                token = data.token;
+                localStorage.setItem('token', token);
+                showApp();
+                // Cargar proyectos después de un pequeño delay
+                setTimeout(() => {
+                    loadProjects().catch(err => {
+                        console.error('Error loading projects:', err);
+                        showMessage('app-message', 'Error al cargar proyectos. Intenta recargar la página.', 'error');
+                    });
+                }, 100);
+            } else {
+                showMessage('auth-message', 'Error: No se recibió token', 'error');
+            }
         } else {
-            showMessage('auth-message', 'Credenciales inválidas', 'error');
+            const errorText = await response.text();
+            showMessage('auth-message', 'Credenciales inválidas: ' + errorText, 'error');
         }
     } catch (error) {
-        showMessage('auth-message', 'Error de conexión', 'error');
+        showMessage('auth-message', 'Error de conexión: ' + error.message, 'error');
     }
 }
 
@@ -75,12 +86,23 @@ async function register() {
 
         if (response.ok) {
             const data = await response.json();
-            token = data.token;
-            localStorage.setItem('token', token);
-            showApp();
-            loadProjects();
+            if (data.token) {
+                token = data.token;
+                localStorage.setItem('token', token);
+                showApp();
+                // Cargar proyectos después de un pequeño delay
+                setTimeout(() => {
+                    loadProjects().catch(err => {
+                        console.error('Error loading projects:', err);
+                        showMessage('app-message', 'Error al cargar proyectos. Intenta recargar la página.', 'error');
+                    });
+                }, 100);
+            } else {
+                showMessage('auth-message', 'Error: No se recibió token', 'error');
+            }
         } else {
-            showMessage('auth-message', 'Error al registrar usuario', 'error');
+            const errorText = await response.text();
+            showMessage('auth-message', 'Error al registrar usuario: ' + errorText, 'error');
         }
     } catch (error) {
         showMessage('auth-message', 'Error de conexión', 'error');
@@ -105,6 +127,14 @@ function showApp() {
 // Projects functions
 async function loadProjects() {
     try {
+        // Recargar token desde localStorage por si acaso
+        token = localStorage.getItem('token');
+        
+        if (!token) {
+            logout();
+            return;
+        }
+
         const response = await fetch(`${API_URL}/api/projects`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -113,10 +143,17 @@ async function loadProjects() {
             const projects = await response.json();
             renderProjects(projects);
         } else if (response.status === 401 || response.status === 403) {
-            logout();
+            // Token inválido o expirado
+            const errorText = await response.text().catch(() => '');
+            console.error('Auth error:', response.status, errorText);
+            showMessage('app-message', 'Error de autenticación. Por favor, inicia sesión nuevamente', 'error');
+            setTimeout(() => logout(), 3000);
+        } else {
+            const errorText = await response.text().catch(() => '');
+            showMessage('app-message', 'Error al cargar proyectos (status: ' + response.status + ')', 'error');
         }
     } catch (error) {
-        showMessage('app-message', 'Error al cargar proyectos', 'error');
+        showMessage('app-message', 'Error de conexión: ' + error.message, 'error');
     }
 }
 

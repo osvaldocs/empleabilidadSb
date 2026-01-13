@@ -1,5 +1,7 @@
 package com.example.demo.infrastructure.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,14 +30,25 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            String userId = jwtService.extractUserId(token);
+            try {
+                String token = authHeader.substring(7);
+                String userId = jwtService.extractUserId(token);
 
-            if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(userId, null, null);
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(userId, null, null);
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            } catch (ExpiredJwtException e) {
+                // Token expirado - continuar sin autenticar
+                // Spring Security manejará el 401/403
+            } catch (JwtException e) {
+                // Token inválido - continuar sin autenticar
+                // Spring Security manejará el 401/403
+            } catch (Exception e) {
+                // Otras excepciones - continuar sin autenticar
+                // Spring Security manejará el 401/403
             }
         }
 

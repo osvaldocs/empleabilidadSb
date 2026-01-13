@@ -19,7 +19,7 @@ public class CompleteTaskService implements CompleteTaskUseCase {
 
     public CompleteTaskService(
             TaskRepositoryPort taskRepository,
-            ProjectRepositoryPort projectRepository,
+                               ProjectRepositoryPort projectRepository,
             AuditLogPort auditLogPort,
             NotificationPort notificationPort
     ) {
